@@ -12,7 +12,7 @@ O arquivo TCPEchoServ contem o codigo de um servidor simples que reenvia a mensa
 </a>
 <br>
 <a>
-Compilar: gcc -o echoSrv TCPEchoSrv.c
+Compilar: gcc -o echoSrv TCPEchoSrv.c <br>
 Uso: ./echoSrv 7777
 </a>
 
@@ -25,5 +25,5 @@ O arquivo TCPEchoClient contem o codigo de envio de uma mensagem para o servidor
 </a>
 <br>
 <a>
-Compilar: gcc -o echoCli TCPEchoClient.c
+Compilar: gcc -o echoCli TCPEchoClient.c <br>
 Uso: ./echoCli 127.0.0.1 7777 ola
