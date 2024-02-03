@@ -8,17 +8,7 @@ TCP Echo
  </h3>
 
 <a>
-O arquivo TCPEchoServ contem o codigo de um servidor simples e um cliente
+O repositoriov contem o codigo de um cliente e um servidor simplese
 que reenvia a mensagem para o cliente que a enviou
 </a>
 <br>
-
-<a>
-<strong>Compilar:</strong> gcc -o echoSrv TCPEchoSrv.c <br>
-<strong>Uso:</strong> ./echoSrv 7777
-</a>
-
-<br>
-<a>
-<strong>Compilar:</strong> gcc -o echoCli TCPEchoClient.c <br>
-<strong>Uso:</strong> ./echoCli 127.0.0.1 7777 ola
