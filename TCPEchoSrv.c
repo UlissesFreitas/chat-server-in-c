@@ -25,7 +25,7 @@ int main(int argc, char *argv[]){
 	unsigned int clntLen;		// tamando da estrutura de endereco
 
 	if( argc != 2) {
-		fprintf(stderr, "Uso: %s <Porta>\n". argv[0]);
+		fprintf(stderr, "Uso: %s <Porta>\n", argv[0]);
 		exit(1);
 	}
 	// atoi(), conveerte string em int
@@ -40,27 +40,27 @@ int main(int argc, char *argv[]){
 
 	memset(&echoServAddr, 0, sizeof(echoServAddr));		// Zera a estrutura
 
-	echoServAddr.sinfamily = AF_INET; 					// Endereco IPV4
+	echoServAddr.sin_family = AF_INET; 					// Endereco IPV4
 	echoServAddr.sin_addr.s_addr = htonl(INADDR_ANY);	// Qualquer interface
-	echoServAddr.sin_port htnos(echoServPort);			// Porta do servidor
+	echoServAddr.sin_port = htons(echoServPort);			// Porta do servidor
 
 	if( bind(servSock, (struct sockaddr*) &echoServAddr, sizeof(echoServAddr)) < 0 ){
 		DieWithError("O Bind falhou\n");
 	}
 
-	if( listen(wervSock, MAXCONEX) ){
+	if( listen(servSock, MAXCONEX) ){
 		DieWithError("O listen falhou");
 	}
 
-	for (::) {
+	for (;;) {
 		clntLen = sizeof(echoClntAddr);
 
-		clntSock = accept(servSock, (struct sockadd *) &echoClntAddr, &clntLen)
+		clntSock = accept(servSock, (struct sockaddr *) &echoClntAddr, &clntLen);
 		if( clntSock < 0){
 			DieWithError("O accept falhou");
 		}
 
-		printf("Cliente conectado <%s>", inet_ntoa(echoClntAddr.sin_addr);
+		printf("Cliente conectado <%s>", inet_ntoa(echoClntAddr.sin_addr));
 
 		HandleTCPClient(clntSock);
 	}
@@ -74,7 +74,33 @@ void DieWithError(char *errorMessage){
 }
 
 
-void handleTCPClient(int clntSocket){
+void HandleTCPClient(int clntSocket){
 
+	char echoBuffer[RCVBUFSIZE]; // Buffer que armazena as mensagens
+	int recvMsgSize; // tamanho da mensagem recebida
+
+
+	// recv() escreve dentro do echoBuffer a mensagem que esta contida no clntSocket
+	// recv() retorna o tamanho da mensagem recebida ou -1 se ocorrer um erro
+	recvMsgSize = 1;
+
+	while(1){
+	// recvMsgSize >0
+
+		recvMsgSize = recv(clntSocket, echoBuffer, RCVBUFSIZE, 0);
+		if(recvMsgSize <0){
+			close(clntSocket);
+			DieWithError("O recv falhou");
+		}
+
+		 if(send(clntSocket, echoBuffer, recvMsgSize, 0) != recvMsgSize){
+            close(clntSocket);
+			DieWithError("O send falhou");
+        }
+
+	}
 
 }
+
+
+
