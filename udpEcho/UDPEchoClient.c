@@ -7,7 +7,7 @@
 
 #define ECHOMAX 255
 
-void DieWithError(char *erroMessage);
+void DieWithError(char *errorMessage);
 
 int main(int argc, char *argv[]){
 
@@ -36,7 +36,7 @@ int main(int argc, char *argv[]){
 
 	// verifica o tamanho da string de entrada que sera enviada ao servidor
 	if((echoStringLen = strlen(echoString)) > ECHOMAX) {
-		DieWithError("Echo e muiti longo");
+		DieWithError("Echo e muito longo");
 	}
 
 	// cira o socket UPD
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]){
 	}
 
 	if(echoServAddr.sin_addr.s_addr != fromAddr.sin_addr.s_addr){
-		fprintf(stderr, "Erro: ");
+		fprintf(stderr, "Erro: pacote recebido de uma origem desconhecida");
 		exit(1);
 	}
 
@@ -82,6 +82,7 @@ int main(int argc, char *argv[]){
 }
 
 
-void DieWithError(char *erroMessage){
+void DieWithError(char *errorMessage){
+	perror(errorMessage);
 	exit(1);
 }
